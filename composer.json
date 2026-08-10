@@ -1,0 +1,20 @@
+{
+    "name": "merlin/module-meta-conversion-hyva-compatibility",
+    "description": "Hyva compatibility layer for Meta_Conversion without RequireJS or jQuery",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.1",
+        "meta/module-conversion": "*",
+        "hyva-themes/magento2-theme-module": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Merlin\\MetaConversionHyvaCompatibility\\": ""
+        }
+    }
+}
