@@ -6,7 +6,7 @@ Hyva compatibility layer for Meta_Conversion without RequireJS or jQuery
 
 HyvÃ compatibility layer for `Meta_Conversion`.
 
-The module leaves the Meta vendor package untouched and replaces only the frontend execution layer on HyvÃ¤ layout handles.
+The module leaves the Meta vendor package untouched and replaces only the frontend execution layer on HyvÃ layout handles.
 
 ## Design
 
