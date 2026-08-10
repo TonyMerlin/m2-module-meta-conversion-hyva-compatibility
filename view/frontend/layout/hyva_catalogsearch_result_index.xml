@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="fbe.pixel.add_to_cart"
+                        template="Merlin_MetaConversionHyvaCompatibility::pixel/add_to_cart.phtml"/>
+        <referenceBlock name="fbe.pixel.customize_product"
+                        template="Merlin_MetaConversionHyvaCompatibility::pixel/customize_product.phtml"/>
+        <referenceBlock name="fbe.pixel.search"
+                        template="Merlin_MetaConversionHyvaCompatibility::pixel/search.phtml"/>
+    </body>
+</page>

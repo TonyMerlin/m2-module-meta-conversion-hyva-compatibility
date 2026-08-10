@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Merlin_MetaConversionHyvaCompatibility::js/meta-hyva.js"/>
+    </head>
+    <body>
+        <referenceBlock name="fbe.pixel.header"
+                        template="Merlin_MetaConversionHyvaCompatibility::pixel/head.phtml"/>
+    </body>
+</page>

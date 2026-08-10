@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="fbe.pixel.initate_checkout"
+                        template="Merlin_MetaConversionHyvaCompatibility::pixel/initiate_checkout.phtml"/>
+        <referenceBlock name="fbe.pixel.add_payment_info"
+                        template="Merlin_MetaConversionHyvaCompatibility::pixel/add_payment_info.phtml"/>
+    </body>
+</page>
