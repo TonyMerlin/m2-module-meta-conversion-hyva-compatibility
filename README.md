@@ -36,4 +36,4 @@ The module leaves the Meta vendor package untouched and replaces only the fronte
 - CompleteRegistration
 - Contact
 
-Install extension into /app/code/Merlin/MetaConversionHyvaCompatibility
+Install extension into /app/code/Merlin/MetaConversionHyvaCompatibility/
