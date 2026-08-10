@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+use Meta\Conversion\Block\Pixel\ViewContent;
+
+/**
+ * @var ViewContent $block
+ * @var Escaper $escaper
+ * @var SecureHtmlRenderer $secureRenderer
+ */
+
+if ($block->getFacebookPixelID()) {
+    $contentData = $block->getContentData();
+    $config = [
+        'url' => $block->getTrackerUrl(),
+        'payload' => [
+            'eventName' => $block->getEventToObserveName(),
+            'productId' => $block->getProductId(),
+        ],
+        'browserEventData' => [
+            'fbAgentVersion' => $block->getFacebookAgentVersion(),
+            'fbPixelId' => $block->getFacebookPixelID(),
+            'source' => $block->getSource(),
+            'pluginVersion' => $block->getPluginVersion(),
+            'track' => 'track',
+            'event' => 'ViewContent',
+            'payload' => [
+                'content_type' => $block->getContentType(),
+                'content_ids' => json_encode($contentData['content_ids']),
+                'content_name' => $block->getContentName() ?? '',
+                'contents' => json_encode($contentData['contents']),
+                'content_category' => $block->getContentCategory() ?? '',
+                'value' => $block->getValue() ?? '',
+                'currency' => $block->getCurrency() ?? '',
+            ],
+        ],
+    ];
+    $json = json_encode($config, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    $script = "(function run(){if(!window.merlinMetaHyva){window.setTimeout(run,10);return;}window.merlinMetaHyva.track({$json});}());";
+    echo $secureRenderer->renderTag('script', ['type' => 'text/javascript'], $script, false);
+}

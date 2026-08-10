@@ -1,0 +1,58 @@
+<?php
+
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+use Meta\Conversion\Block\Pixel\Head;
+
+/**
+ * @var Head $block
+ * @var Escaper $escaper
+ * @var SecureHtmlRenderer $secureRenderer
+ */
+
+if ($block->getFacebookPixelID()) {
+    $pixelConfig = [
+        'pixelId' => (string)$block->getFacebookPixelID(),
+        'automaticMatchingFlag' => (bool)$block->getAutomaticMatchingFlag(),
+        'userDataUrl' => $block->getUserDataUrl(),
+        'agent' => $block->getFacebookAgentVersion(),
+    ];
+    $pageViewConfig = [
+        'url' => $block->getTrackerUrl(),
+        'payload' => [
+            'eventName' => $block->getEventToObserveName(),
+        ],
+        'browserEventData' => [
+            'fbAgentVersion' => $block->getFacebookAgentVersion(),
+            'fbPixelId' => $block->getFacebookPixelID(),
+            'source' => $block->getSource(),
+            'pluginVersion' => $block->getPluginVersion(),
+            'track' => 'track',
+            'event' => 'PageView',
+            'payload' => [],
+        ],
+    ];
+    $pixelJson = json_encode($pixelConfig, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    $pageViewJson = json_encode($pageViewConfig, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    $script = <<<JS
+(function () {
+    const init = function () {
+        if (!window.merlinMetaHyva) {
+            window.setTimeout(init, 10);
+            return;
+        }
+        window.merlinMetaHyva.initPixel({$pixelJson})
+            .then(function () {
+                return window.merlinMetaHyva.track({$pageViewJson});
+            });
+    };
+    init();
+}());
+JS;
+    echo $secureRenderer->renderTag('script', ['type' => 'text/javascript'], $script, false);
+} else {
+    $script = "console.log('No Meta pixel is configured, please log in as a admin and then visit Stores -> Meta -> Setup -> Get Started');";
+    echo $secureRenderer->renderTag('script', ['type' => 'text/javascript'], $script, false);
+}

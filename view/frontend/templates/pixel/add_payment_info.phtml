@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Helper\SecureHtmlRenderer;
+use Meta\Conversion\Block\Pixel\AddPaymentInfo;
+
+/**
+ * @var AddPaymentInfo $block
+ * @var Escaper $escaper
+ * @var SecureHtmlRenderer $secureRenderer
+ */
+
+if ($block->getFacebookPixelID()) {
+    $config = [
+        'url' => $block->getTrackerUrl(),
+        'payload' => [
+            'eventName' => $block->getEventToObserveName(),
+        ],
+        'browserEventData' => [
+            'fbAgentVersion' => $block->getFacebookAgentVersion(),
+            'fbPixelId' => $block->getFacebookPixelID(),
+            'source' => $block->getSource(),
+            'pluginVersion' => $block->getPluginVersion(),
+            'track' => 'track',
+            'event' => 'AddPaymentInfo',
+            'payload' => [
+                'currency' => $block->getCurrency(),
+            ],
+        ],
+    ];
+    $json = json_encode($config, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+    $script = "(function run(){if(!window.merlinMetaHyva){window.setTimeout(run,10);return;}window.merlinMetaHyva.configurePaymentInfo({$json});}());";
+    echo $secureRenderer->renderTag('script', ['type' => 'text/javascript'], $script, false);
+}
